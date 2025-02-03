@@ -24,7 +24,7 @@ jobs:
           --health-retries=5
     steps:
     - name: check out branch
-    - uses: actions/checkout@v4
+      uses: actions/checkout@v4
     
     - name: Docker Login
       uses: docker/login-action@v3.3.0
