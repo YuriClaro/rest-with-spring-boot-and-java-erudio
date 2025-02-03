@@ -38,8 +38,15 @@ jobs:
       working-directory: ./rest-with-spring-boot-and-java-erudio
       run: mvn clean install package -DskipTests
 
-    - name: Push to Docker Hub Container Registry
+    - name: Pull existing Docker image from Docker Hub
+      run: |
+        docker pull ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-and-java-erudio:latest
+
+    - name: Tag image with run ID
       run: |
         docker tag ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-and-java-erudio:latest ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-and-java-erudio:${{ github.run_id }}
+
+    - name: Push tagged image to Docker Hub
+      run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-and-java-erudio:${{ github.run_id }}
         docker push ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-and-java-erudio:latest
