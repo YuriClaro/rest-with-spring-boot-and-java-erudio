@@ -1,6 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://postgres:5432/erudio
-    username: postgres
-    password: 1234
-    driver-class-name: org.postgresql.Driver
