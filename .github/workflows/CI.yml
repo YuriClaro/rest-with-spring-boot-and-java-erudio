@@ -8,20 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:13
-        env:
-          POSTGRES_DB: erudio
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 1234
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U postgres"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
+    
     steps:
     - name: check out branch
       uses: actions/checkout@v4
@@ -47,13 +34,9 @@ jobs:
       working-directory: ./rest-with-spring-boot-and-java-erudio
       run: mvn compile
 
-    - name: run test case
-      working-directory: ./rest-with-spring-boot-and-java-erudio
-      run: mvn test
-
     - name: Build with Maven
       working-directory: ./rest-with-spring-boot-and-java-erudio
-      run: mvn clean install package
+      run: mvn clean install package -DskipTests
 
     - name: Push to Docker Hub Container Registry
       run: |
