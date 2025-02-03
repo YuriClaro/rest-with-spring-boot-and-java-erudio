@@ -1,0 +1,23 @@
+spring:
+ application:
+  name: rest-with-spring-boot-and-java-erudio
+ datasource:
+  url: jdbc:postgresql://postgres:5432/erudio
+  username: postgres
+  password: 1234
+  driver-class-name: org.postgresql.Driver
+ jpa:
+  generate-ddl: true
+  hibernate:
+   ddl-auto: none
+  properties:
+   dialect: org.hibernate.dialect.PostgreSQLDialect
+ servlet:
+  multipart:
+   enabled: true
+   file-size-threshold: 2KB
+   max-file-size: 128KB
+   max-request-size: 128KB
+   resolve-lazily: false
+
+filePath: D:\Projetos\Udemy\erudio_files

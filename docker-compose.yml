@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: erudio
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    networks:
+      - microservices-net
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 5s
+      retries: 5
+      timeout: 3s
+
+  rest-with-spring-boot-and-java-erudio:
+    image: rest-with-spring-boot-and-java-erudio
+    container_name: rest-with-spring-boot-and-java-erudio
+    build:
+      context: ./rest-with-spring-boot-and-java-erudio
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/erudio
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1234
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    driver: bridge
